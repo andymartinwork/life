@@ -102,25 +102,23 @@ public class Cell {
         // TODO: This doesn't seem to be working
         switch (direction) {
             case UP:
-                if (yPosition > 0) {
+                if (yPosition > 0 && (board[yPosition - 1][xPosition] == null)) {
                     board[yPosition - 1][xPosition] = this;
                     board[yPosition][xPosition] = null;
                     yPosition = yPosition - 1;
-                    System.out.println("oldpos: " + board[yPosition][xPosition] + " newpos: " + board[yPosition - 1][xPosition]);
                 }
                 break;
 
             case DOWN:
-                if (yPosition < (gridSize - 1)) {
+                if (yPosition < (gridSize - 1) && (board[yPosition + 1][xPosition] == null)) {
                     board[yPosition + 1][xPosition] = this;
                     board[yPosition][xPosition] = null;
                     yPosition = yPosition + 1;
-                    System.out.println("oldpos: " + board[yPosition][xPosition] + " newpos: " + board[yPosition + 1][xPosition]);
                 }
                 break;
 
             case LEFT:
-                if (xPosition < 0) {
+                if (xPosition < 0 && (board[yPosition][xPosition - 1] ==null)) {
                     board[yPosition][xPosition - 1] = this;
                     board[yPosition][xPosition] = null;
                     xPosition = xPosition - 1;
@@ -128,7 +126,7 @@ public class Cell {
                 break;
 
             case RIGHT:
-                if (xPosition < (gridSize -1)) {
+                if (xPosition < (gridSize -1) && (board[yPosition][xPosition + 1] == null)) {
                     board[yPosition][xPosition + 1] = this;
                     board[yPosition][xPosition] = null;
                     xPosition = xPosition + 1;
