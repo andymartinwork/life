@@ -37,9 +37,9 @@ public class Life {
 
         System.out.println();
 
-        for (int x = 0; x < gridSize; x++) {
-            for (int y = 0; y < gridSize; y++) {
-                Object boardObject = board[x][y];
+        for (int y = 0; y < gridSize; y++) {
+            for (int x = 0; x < gridSize; x++) {
+                Object boardObject = board[y][x];
                 if (boardObject != null) {
                     System.out.print("C ");
                 } else {
@@ -56,9 +56,13 @@ public class Life {
 
     // Loop through each of the elements and run the tick method on each Cell
     public void tick() {
-        for (int x = 0; x < gridSize; x++) {
-            for (int y = 0; y < gridSize; y++) {
-                Object boardObject = board[x][y];
+
+        // TODO: Solve the problem where cells move themselves and then get executed twice
+        // That means we should probably read a list of cell positions at the point of the tick
+        // and then execute them.
+        for (int y = 0; y < gridSize; y++) {
+            for (int x = 0; x < gridSize; x++) {
+                Object boardObject = board[y][x];
                 if (boardObject != null) {
                     if (boardObject instanceof Cell) {
                         ((Cell) boardObject).tick();

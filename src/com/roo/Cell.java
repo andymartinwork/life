@@ -69,25 +69,25 @@ public class Cell {
         switch (direction) {
             case UP:
                 if (yPosition > 0) {
-                    freePosition = (board[xPosition][yPosition - 1] == null);
+                    freePosition = (board[yPosition - 1][xPosition] == null);
                 }
                 break;
 
             case DOWN:
                 if (yPosition < (gridSize - 1)) {
-                    freePosition = (board[xPosition][yPosition + 1] == null);
+                    freePosition = (board[yPosition + 1][xPosition] == null);
                 }
                 break;
 
             case LEFT:
                 if (xPosition < 0) {
-                    freePosition = (board[xPosition - 1][yPosition] == null);
+                    freePosition = (board[yPosition][xPosition - 1] == null);
                 }
                 break;
 
             case RIGHT:
                 if (xPosition < (gridSize -1)) {
-                    freePosition = (board[xPosition + 1][yPosition] == null);
+                    freePosition = (board[yPosition][xPosition + 1] == null);
                 }
                 break;
         }
@@ -99,26 +99,26 @@ public class Cell {
         if(feel(direction)) {
             switch (direction) {
                 case UP:
-                    board[xPosition][yPosition - 1] = this;
-                    board[xPosition][yPosition] = null;
+                    board[yPosition - 1][xPosition] = this;
+                    board[yPosition][xPosition] = null;
                     yPosition = yPosition - 1;
                     break;
 
                 case DOWN:
-                    board[xPosition][yPosition + 1] = this;
-                    board[xPosition][yPosition] = null;
+                    board[yPosition + 1][xPosition] = this;
+                    board[yPosition][xPosition] = null;
                     yPosition = yPosition + 1;
                     break;
 
                 case LEFT:
-                    board[xPosition - 1][yPosition] = this;
-                    board[xPosition][yPosition] = null;
+                    board[yPosition][xPosition - 1] = this;
+                    board[yPosition][xPosition] = null;
                     xPosition = xPosition - 1;
                     break;
 
                 case RIGHT:
-                    board[xPosition + 1][yPosition] = this;
-                    board[xPosition][yPosition] = null;
+                    board[yPosition][xPosition + 1] = this;
+                    board[yPosition][xPosition] = null;
                     xPosition = xPosition + 1;
                     break;
             }
@@ -129,7 +129,7 @@ public class Cell {
         if (age > deathDate) {
             // Die by removing self from board.
             System.out.println("Cell dying. DNA: " + dna);
-            board[xPosition][yPosition] = null;
+            board[yPosition][xPosition] = null;
         }
     }
 
