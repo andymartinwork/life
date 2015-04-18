@@ -15,7 +15,9 @@ public class Cell {
         NONE
     }
 
-    private final int MAX_LIFE = 10000;
+    // TODO: Add MAX_LIFE to the dna String
+    private final int MAX_LIFE = 15;
+    // TODO: Convert dna to JSON
     private String dna = "URRLD";
     private int dnaPosition = 0;
     private int age = 0;
@@ -25,6 +27,7 @@ public class Cell {
     private int yPosition;
     private int gridSize;
 
+    // TODO: Initialise instructions randomly
     public Cell(Object[][] board, int xPosition, int yPosition, int gridSize) {
         this.board = board;
         this.xPosition = xPosition;
@@ -99,7 +102,6 @@ public class Cell {
     // This function moves the cell on the grid, provided it's empty and in the world
     private void move(Direction direction) {
 
-        // TODO: This doesn't seem to be working
         switch (direction) {
             case UP:
                 if (yPosition > 0 && (board[yPosition - 1][xPosition] == null)) {
@@ -135,7 +137,16 @@ public class Cell {
         }
     }
 
-    private void checkIfDead() {
+    private void eat() {
+
+    }
+
+    private void reproduce() {
+
+    }
+
+    private void age() {
+        age++;
         if (age > deathDate) {
             // Die by removing self from board.
             System.out.println("Cell dying. DNA: " + dna);
@@ -145,8 +156,7 @@ public class Cell {
 
     public void tick() {
         decodeDna();
-        age++;
-        checkIfDead();
+        age();
     }
 
 //    public class Location {

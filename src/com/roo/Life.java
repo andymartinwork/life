@@ -7,13 +7,13 @@ import java.util.Random;
  * Created by andy on 14/04/15.
  */
 
-// TODO: possibly add food? Look at research proposal
 public class Life {
 
     private int gridSize = 15;
     public Object[][] board = new Object[gridSize][gridSize];
     private final int numberOfCells = gridSize;
 
+    // TODO: Add food board
     public Life() {
         setupBoard();
     }
@@ -77,7 +77,6 @@ public class Life {
             }
         }
 
-        // TODO: Adjacent cells seem to be setting each other to null
         for (Cell cell : cells) {
             cell.tick();
         }
