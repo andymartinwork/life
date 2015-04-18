@@ -63,65 +63,77 @@ public class Cell {
     }
 
     // This feels the current location, or a location around it
-    private boolean feel(Direction direction) {
-        boolean freePosition = false;
+//    private boolean feel(Direction direction) {
+//        boolean freePosition = false;
+//
+//        // TODO: This doesn't seem to be working
+//        switch (direction) {
+//            case UP:
+//                if (yPosition > 0) {
+//                    freePosition = (board[yPosition - 1][xPosition] == null);
+//                }
+//                break;
+//
+//            case DOWN:
+//                if (yPosition < (gridSize - 1)) {
+//                    freePosition = (board[yPosition + 1][xPosition] == null);
+//                }
+//                break;
+//
+//            case LEFT:
+//                if (xPosition < 0) {
+//                    freePosition = (board[yPosition][xPosition - 1] == null);
+//                }
+//                break;
+//
+//            case RIGHT:
+//                if (xPosition < (gridSize -1)) {
+//                    freePosition = (board[yPosition][xPosition + 1] == null);
+//                }
+//                break;
+//        }
+//        System.out.println("freeposition: " + freePosition);
+//        return freePosition;
+//    }
 
+    // This function moves the cell on the grid, provided it's empty and in the world
+    private void move(Direction direction) {
+
+        // TODO: This doesn't seem to be working
         switch (direction) {
             case UP:
                 if (yPosition > 0) {
-                    freePosition = (board[yPosition - 1][xPosition] == null);
+                    board[yPosition - 1][xPosition] = this;
+                    board[yPosition][xPosition] = null;
+                    yPosition = yPosition - 1;
+                    System.out.println("oldpos: " + board[yPosition][xPosition] + " newpos: " + board[yPosition - 1][xPosition]);
                 }
                 break;
 
             case DOWN:
                 if (yPosition < (gridSize - 1)) {
-                    freePosition = (board[yPosition + 1][xPosition] == null);
+                    board[yPosition + 1][xPosition] = this;
+                    board[yPosition][xPosition] = null;
+                    yPosition = yPosition + 1;
+                    System.out.println("oldpos: " + board[yPosition][xPosition] + " newpos: " + board[yPosition + 1][xPosition]);
                 }
                 break;
 
             case LEFT:
                 if (xPosition < 0) {
-                    freePosition = (board[yPosition][xPosition - 1] == null);
+                    board[yPosition][xPosition - 1] = this;
+                    board[yPosition][xPosition] = null;
+                    xPosition = xPosition - 1;
                 }
                 break;
 
             case RIGHT:
                 if (xPosition < (gridSize -1)) {
-                    freePosition = (board[yPosition][xPosition + 1] == null);
-                }
-                break;
-        }
-        return freePosition;
-    }
-
-    // This function moves the cell on the grid, provided it's empty and in the world
-    private void move(Direction direction) {
-        if(feel(direction)) {
-            switch (direction) {
-                case UP:
-                    board[yPosition - 1][xPosition] = this;
-                    board[yPosition][xPosition] = null;
-                    yPosition = yPosition - 1;
-                    break;
-
-                case DOWN:
-                    board[yPosition + 1][xPosition] = this;
-                    board[yPosition][xPosition] = null;
-                    yPosition = yPosition + 1;
-                    break;
-
-                case LEFT:
-                    board[yPosition][xPosition - 1] = this;
-                    board[yPosition][xPosition] = null;
-                    xPosition = xPosition - 1;
-                    break;
-
-                case RIGHT:
                     board[yPosition][xPosition + 1] = this;
                     board[yPosition][xPosition] = null;
                     xPosition = xPosition + 1;
-                    break;
-            }
+                }
+                break;
         }
     }
 

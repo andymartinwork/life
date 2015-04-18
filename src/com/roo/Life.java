@@ -1,5 +1,6 @@
 package com.roo;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -28,28 +29,32 @@ public class Life {
 
             Cell cell = new Cell(board, xPosition, yPosition, gridSize);
 
-            board[xPosition][yPosition] = cell;
+            board[yPosition][xPosition] = cell;
         }
     }
 
     // Dump the state of the board out to the command line
-    public void printBoardState() {
+    public void printBoardState(boolean printGrid) {
 
+        int numberOfItems = 0;
         System.out.println();
 
         for (int y = 0; y < gridSize; y++) {
             for (int x = 0; x < gridSize; x++) {
                 Object boardObject = board[y][x];
                 if (boardObject != null) {
-                    System.out.print("C ");
+                    numberOfItems++;
+                    if (printGrid) { System.out.print("C "); }
                 } else {
-                    System.out.print("- ");
+                    if (printGrid) { System.out.print("- "); }
                 }
             }
 
-            System.out.println();
+            if (printGrid) { System.out.println(); }
         }
+
         System.out.println();
+        System.out.println("Number of items: " + numberOfItems);
         System.out.println("===============");
         System.out.println();
     }
@@ -57,18 +62,24 @@ public class Life {
     // Loop through each of the elements and run the tick method on each Cell
     public void tick() {
 
-        // TODO: Solve the problem where cells move themselves and then get executed twice
-        // That means we should probably read a list of cell positions at the point of the tick
+        ArrayList<Cell> cells = new ArrayList<Cell>();
+
+        // We should read a list of cell positions at the point of the tick
         // and then execute them.
         for (int y = 0; y < gridSize; y++) {
             for (int x = 0; x < gridSize; x++) {
                 Object boardObject = board[y][x];
                 if (boardObject != null) {
                     if (boardObject instanceof Cell) {
-                        ((Cell) boardObject).tick();
+                        cells.add((Cell) boardObject);
                     }
                 }
             }
+        }
+
+        // TODO: Adjacent cells seem to be setting each other to null
+        for (Cell cell : cells) {
+            cell.tick();
         }
     }
 }
