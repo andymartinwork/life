@@ -12,6 +12,7 @@ public class Main {
 
         while(true) {
             try {
+                tickCounter++;
                 // Add food every 10 turns
                 if (tickCounter % 10 == 0) {
                     life.addFood();
@@ -20,7 +21,7 @@ public class Main {
                 life.printBoardState(true);
                 life.tick();
                 Thread.sleep(2000);
-                tickCounter++;
+
             } catch(InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }

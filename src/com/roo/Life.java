@@ -15,7 +15,6 @@ public class Life {
     private final int NUMBER_OF_CELLS = gridSize;
     private final int NUMBER_OF_FOOD = gridSize;
 
-    // TODO: Add food board
     public Life() {
         setupBoard();
         addFood();

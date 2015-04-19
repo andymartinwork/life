@@ -17,7 +17,9 @@ public class Cell {
 
     // TODO: Add MAX_LIFE to the dna String
     private final int MAX_LIFE = 15;
-    // TODO: Convert dna to JSON
+    // TODO: Convert dna to JSON and have a string of actions for each method
+    // For example, eat might look at other locations and move to them.
+    // Reproduce might move to an empty bit of the board.
     private String dna = "URRLD";
     private int dnaPosition = 0;
     private int age = 0;
@@ -151,7 +153,8 @@ public class Cell {
 
     private void age() {
         age++;
-        if (age > deathDate) {
+        foodStore--;
+        if (age > deathDate || foodStore < 0) {
             // Die by removing self from board.
             System.out.println("Cell dying. DNA: " + dna);
             board[yPosition][xPosition] = null;
