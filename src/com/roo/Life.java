@@ -11,11 +11,14 @@ public class Life {
 
     private int gridSize = 15;
     public Object[][] board = new Object[gridSize][gridSize];
-    private final int numberOfCells = gridSize;
+    public int[][] foodBoard = new int[gridSize][gridSize];
+    private final int NUMBER_OF_CELLS = gridSize;
+    private final int NUMBER_OF_FOOD = gridSize;
 
     // TODO: Add food board
     public Life() {
         setupBoard();
+        addFood();
     }
 
     public void setupBoard() {
@@ -23,13 +26,27 @@ public class Life {
         // Randomly distribute Cells over the board
         Random rand = new Random();
 
-        for (int i = 0; i < numberOfCells; i++) {
+        for (int i = 0; i < NUMBER_OF_CELLS; i++) {
             int xPosition = rand.nextInt(gridSize);
             int yPosition = rand.nextInt(gridSize);
 
-            Cell cell = new Cell(board, xPosition, yPosition, gridSize);
+            Cell cell = new Cell(board, foodBoard, xPosition, yPosition, gridSize);
 
             board[yPosition][xPosition] = cell;
+        }
+    }
+
+    // Food is currently an integer representing the amount of food in a position
+    public void addFood() {
+        Random rand = new Random();
+
+        for (int i = 0; i < NUMBER_OF_FOOD; i++) {
+            int xPosition = rand.nextInt(gridSize);
+            int yPosition = rand.nextInt(gridSize);
+
+            int foodValue = rand.nextInt(10);
+
+            foodBoard[yPosition][xPosition] = foodValue;
         }
     }
 

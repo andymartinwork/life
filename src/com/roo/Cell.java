@@ -21,18 +21,21 @@ public class Cell {
     private String dna = "URRLD";
     private int dnaPosition = 0;
     private int age = 0;
+    private int foodStore = 10; // Start with some food
     private int deathDate;
     private Object[][] board;
+    private int[][] foodBoard;
     private int xPosition;
     private int yPosition;
     private int gridSize;
 
     // TODO: Initialise instructions randomly
-    public Cell(Object[][] board, int xPosition, int yPosition, int gridSize) {
+    public Cell(Object[][] board, int[][]foodBoard, int xPosition, int yPosition, int gridSize) {
         this.board = board;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.gridSize = gridSize;
+        this.foodBoard = foodBoard;
 
         Random random = new Random();
         deathDate = random.nextInt(MAX_LIFE);
@@ -138,7 +141,8 @@ public class Cell {
     }
 
     private void eat() {
-
+        foodStore = foodStore + foodBoard[yPosition][xPosition];
+        foodBoard[yPosition][xPosition] = 0;
     }
 
     private void reproduce() {
@@ -157,20 +161,6 @@ public class Cell {
     public void tick() {
         decodeDna();
         age();
+        eat();
     }
-
-//    public class Location {
-//        public int x;
-//        public int y;
-//
-//        public Location() {
-//            this.x = 0;
-//            this.y = 0;
-//        }
-//
-//        public Location(int x, int y) {
-//            this.x = x;
-//            this.y = y;
-//        }
-//    }
 }
