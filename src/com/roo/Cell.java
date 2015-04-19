@@ -7,6 +7,7 @@ import java.util.Random;
  */
 public class Cell {
 
+    // TODO: Perhaps change this enum to encompass all actions the Cell can perfom?
     private enum Direction {
         UP,
         DOWN,
@@ -20,7 +21,7 @@ public class Cell {
     // TODO: Convert dna to JSON and have a string of actions for each method
     // For example, eat might look at other locations and move to them.
     // Reproduce might move to an empty bit of the board.
-    private String dna = "URRLD";
+    private String dna;
     private int dnaPosition = 0;
     private int age = 0;
     private int foodStore = 10; // Start with some food
@@ -31,8 +32,17 @@ public class Cell {
     private int yPosition;
     private int gridSize;
 
-    // TODO: Initialise instructions randomly
+    // TODO: Initialise dna randomly if not provided with any
+    private static String getRandomDna() {
+        return "URRLD";
+    }
+
     public Cell(Object[][] board, int[][]foodBoard, int xPosition, int yPosition, int gridSize) {
+        this(getRandomDna(), board, foodBoard, xPosition, yPosition, gridSize);
+    }
+
+    public Cell(String dna, Object[][] board, int[][]foodBoard, int xPosition, int yPosition, int gridSize) {
+        this.dna = dna;
         this.board = board;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
@@ -147,8 +157,19 @@ public class Cell {
         foodBoard[yPosition][xPosition] = 0;
     }
 
-    private void reproduce() {
+    // TODO: Actually mutate the dna string.
+    private String mutate(String dna) {
+        return dna;
+    }
 
+    private void reproduce() {
+        // TODO: Add in a random chance of this happening. We can't have all this reproduction going on willy nilly.
+        if (foodStore > 5) {
+            String mutatedDna = mutate(dna);
+            // TODO: choose a random location to reproduce, and make sure it's possible before doing
+            Cell childCell = new Cell(mutatedDna, board, foodBoard, xPosition + 1, yPosition, gridSize);
+            board[yPosition][xPosition + 1] = childCell;
+        }
     }
 
     private void age() {
@@ -165,5 +186,6 @@ public class Cell {
         decodeDna();
         age();
         eat();
+        reproduce();
     }
 }
