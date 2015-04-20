@@ -12,3 +12,5 @@ Proposed features:
 * Ability of a Cell to mutate and change the order of instructions
 * Ability of a Cell to mutate the instructions themselves
 * Addition of food and death rays. Basic survival stuff.
+
+[Read the Research Proposal if you are interested.](Artificial Agents Research Proposal.pdf)
