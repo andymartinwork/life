@@ -20,7 +20,7 @@ public class Main {
 
                 life.printBoardState(true);
                 life.tick();
-                Thread.sleep(2000);
+                Thread.sleep(1000);
 
             } catch(InterruptedException ex) {
                 Thread.currentThread().interrupt();

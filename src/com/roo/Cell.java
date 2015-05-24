@@ -16,8 +16,11 @@ public class Cell {
         NONE
     }
 
-    private final int MAX_LIFE = 15;
-    private final int FOOD_DROP_ON_DEATH = 3; // TODO: I chose 3 food dropped on death randomly. Perhaps this should be something else
+    // These variables predict how many cells will be on the board.
+    // Max life predicts the amount far more than food dropped.
+    private final int MAX_LIFE = 200; // 200 is around the minimum for a stable population on 15*15
+    private final int FOOD_DROP_ON_DEATH = 9; // 9 may be minimum for a stable population on 15*15
+
     // TODO: Convert dna to a tree data structure and change the logic of each function to actions
     // For example, eat might look at other locations and move to them.
     // Reproduce might move to an empty bit of the board.
@@ -191,6 +194,7 @@ public class Cell {
     private int chooseReproductionPosition(int position) {
 
         // If on the edges of the grid, make sure we move in the right direction
+        // TODO: replace with a call to feel
         if (position >= gridSize - 1) {
             position -= position;
 

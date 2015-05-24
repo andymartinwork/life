@@ -9,7 +9,9 @@ import java.util.Random;
 
 public class Life {
 
-    private int gridSize = 15;
+    private final int gridSize = 15;
+    private final int MAX_FOOD_PER_GRID_POSITION = 10;
+
     public Object[][] board = new Object[gridSize][gridSize];
     public int[][] foodBoard = new int[gridSize][gridSize];
     private final int NUMBER_OF_CELLS = gridSize;
@@ -43,7 +45,7 @@ public class Life {
             int xPosition = rand.nextInt(gridSize);
             int yPosition = rand.nextInt(gridSize);
 
-            int foodValue = rand.nextInt(10);
+            int foodValue = rand.nextInt(MAX_FOOD_PER_GRID_POSITION);
 
             foodBoard[yPosition][xPosition] = foodValue;
         }
