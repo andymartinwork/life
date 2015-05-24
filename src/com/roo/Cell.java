@@ -16,9 +16,8 @@ public class Cell {
         NONE
     }
 
-    // TODO: Add MAX_LIFE to the dna String
     private final int MAX_LIFE = 15;
-    // TODO: Convert dna to JSON and have a string of actions for each method
+    // TODO: Convert dna to a tree data structure and change the logic of each function to actions
     // For example, eat might look at other locations and move to them.
     // Reproduce might move to an empty bit of the board.
     private String dna;
@@ -163,12 +162,14 @@ public class Cell {
     }
 
     private void reproduce() {
-        // TODO: Add in a random chance of this happening. We can't have all this reproduction going on willy nilly.
-        if (foodStore > 5) {
+        // There is a random chance of this happening. We can't have all this reproduction going on willy nilly.
+        // At the moment 50% chance
+        if (foodStore > 6 && Math.random() > 0.5) {
             String mutatedDna = mutate(dna);
             // TODO: choose a random location to reproduce, and make sure it's possible before doing
             Cell childCell = new Cell(mutatedDna, board, foodBoard, xPosition + 1, yPosition, gridSize);
             board[yPosition][xPosition + 1] = childCell;
+            foodStore -= 3;
         }
     }
 
@@ -176,9 +177,11 @@ public class Cell {
         age++;
         foodStore--;
         if (age > deathDate || foodStore < 0) {
-            // Die by removing self from board.
+            // Die by removing self from board and adding food to the food tile.
             System.out.println("Cell dying. DNA: " + dna);
             board[yPosition][xPosition] = null;
+            // TODO: I chose 3 food dropped on death randomly. Perhaps this should be something else
+            foodBoard[yPosition][xPosition] = foodBoard[yPosition][xPosition] + foodStore + 3;
         }
     }
 

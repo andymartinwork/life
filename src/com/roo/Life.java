@@ -81,7 +81,7 @@ public class Life {
         ArrayList<Cell> cells = new ArrayList<Cell>();
 
         // We should read a list of cell positions at the point of the tick
-        // and then execute them.
+        // and then execute them. This is to prevent a cell from being run twice.
         for (int y = 0; y < gridSize; y++) {
             for (int x = 0; x < gridSize; x++) {
                 Object boardObject = board[y][x];
