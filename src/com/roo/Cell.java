@@ -17,6 +17,7 @@ public class Cell {
     }
 
     private final int MAX_LIFE = 15;
+    private final int FOOD_DROP_ON_DEATH = 3; // TODO: I chose 3 food dropped on death randomly. Perhaps this should be something else
     // TODO: Convert dna to a tree data structure and change the logic of each function to actions
     // For example, eat might look at other locations and move to them.
     // Reproduce might move to an empty bit of the board.
@@ -142,7 +143,7 @@ public class Cell {
                 break;
 
             case RIGHT:
-                if (xPosition < (gridSize -1) && (board[yPosition][xPosition + 1] == null)) {
+                if (xPosition < (gridSize - 1) && (board[yPosition][xPosition + 1] == null)) {
                     board[yPosition][xPosition + 1] = this;
                     board[yPosition][xPosition] = null;
                     xPosition = xPosition + 1;
@@ -164,13 +165,44 @@ public class Cell {
     private void reproduce() {
         // There is a random chance of this happening. We can't have all this reproduction going on willy nilly.
         // At the moment 50% chance
-        if (foodStore > 6 && Math.random() > 0.5) {
+        if (foodStore > 6 && Math.random() >= 0.5) {
             String mutatedDna = mutate(dna);
-            // TODO: choose a random location to reproduce, and make sure it's possible before doing
-            Cell childCell = new Cell(mutatedDna, board, foodBoard, xPosition + 1, yPosition, gridSize);
-            board[yPosition][xPosition + 1] = childCell;
-            foodStore -= 3;
+
+            // Choose a random location to reproduce, and make sure it's possible before doing
+            if (Math.random() >= 0.5) {
+                int newXPosition = chooseReproductionPosition(xPosition);
+                if ((board[yPosition][newXPosition] == null)) {
+                    Cell childCell = new Cell(mutatedDna, board, foodBoard, newXPosition, yPosition, gridSize);
+                    board[yPosition][newXPosition] = childCell;
+                    foodStore -= 3;
+                }
+
+            } else {
+                int newYPosition = chooseReproductionPosition(yPosition);
+                if ((board[newYPosition][xPosition] == null)) {
+                    Cell childCell = new Cell(mutatedDna, board, foodBoard, xPosition, newYPosition, gridSize);
+                    board[newYPosition][xPosition] = childCell;
+                    foodStore -= 3;
+                }
+            }
         }
+    }
+
+    private int chooseReproductionPosition(int position) {
+
+        // If on the edges of the grid, make sure we move in the right direction
+        if (position >= gridSize - 1) {
+            position -= position;
+
+        } else if (position == 0) {
+            position += position;
+
+        } else {
+            // 50% chance of whether we add to a position or subtract
+            position += (Math.random() >= 0.5) ? 1 : -1;
+        }
+
+        return position;
     }
 
     private void age() {
@@ -180,8 +212,7 @@ public class Cell {
             // Die by removing self from board and adding food to the food tile.
             System.out.println("Cell dying. DNA: " + dna);
             board[yPosition][xPosition] = null;
-            // TODO: I chose 3 food dropped on death randomly. Perhaps this should be something else
-            foodBoard[yPosition][xPosition] = foodBoard[yPosition][xPosition] + foodStore + 3;
+            foodBoard[yPosition][xPosition] = foodBoard[yPosition][xPosition] + foodStore + FOOD_DROP_ON_DEATH;
         }
     }
 
