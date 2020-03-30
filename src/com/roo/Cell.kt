@@ -180,19 +180,16 @@ class Cell(
 
     companion object {
         private fun randomDna(): String {
-            val rand = Random()
-
             val dnaArray: ArrayList<Char> = ArrayList()
             repeat(5) {
                 // This is a bit WTF and quite inefficient
-                dnaArray.add(Direction.values()[rand.nextInt(Direction.values().size)].value)
+                dnaArray.add(Direction.values()[Random().nextInt(Direction.values().size)].value)
             }
             return String(dnaArray.toCharArray())
         }
     }
 
     init {
-        val random = Random()
-        deathDate = random.nextInt(MAX_LIFE)
+        deathDate = Random().nextInt(MAX_LIFE)
     }
 }
