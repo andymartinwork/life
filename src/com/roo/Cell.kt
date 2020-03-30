@@ -118,9 +118,11 @@ class Cell(
         foodBoard[yPosition][xPosition] = 0
     }
 
-    // TODO: Actually mutate the dna string.
     private fun mutate(dna: String): String {
-        return dna
+        val rand = Random()
+        val dnaChars = dna.toCharArray()
+        dnaChars[rand.nextInt(dnaChars.size - 1)] = Direction.values()[rand.nextInt(Direction.values().size)].value
+        return String(dnaChars)
     }
 
     private fun reproduce() { // There is a random chance of this happening. We can't have all this reproduction going on willy nilly.

@@ -43,7 +43,7 @@ class Life {
                 if (boardObject != null) {
                     numberOfItems++
                     if (printGrid) {
-                        print("C ")
+                        print("C ") // TODO: Print last move, maybe?
                     }
                 } else {
                     if (printGrid) {
