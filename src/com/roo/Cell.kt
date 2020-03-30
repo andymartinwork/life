@@ -5,11 +5,17 @@ import java.util.*
 /**
  * Created by andy on 14/04/15.
  */
-class Cell(// TODO: Convert dna to a tree data structure and change the logic of each function to actions
+// TODO: Convert dna to a tree data structure and change the logic of each function to actions
 // For example, eat might look at other locations and move to them.
 // Reproduce might move to an empty bit of the board.
-        private val dna: String, private val board: Array<Array<Any?>>, private val foodBoard: Array<IntArray>, private var xPosition: Int, private var yPosition: Int, private val gridSize: Int) {
-    // TODO: Perhaps change this enum to encompass all actions the Cell can perfom?
+class Cell(
+    private val dna: String,
+    private val board: Array<Array<Any?>>,
+    private val foodBoard: Array<IntArray>,
+    private var xPosition: Int,
+    private var yPosition: Int,
+    private val gridSize: Int) {
+    // TODO: Perhaps change this enum to encompass all actions the Cell can perform?
     private enum class Direction(val value: Char) {
         UP('U'),
         DOWN('D'),
@@ -19,7 +25,7 @@ class Cell(// TODO: Convert dna to a tree data structure and change the logic of
     }
 
     // These variables predict how many cells will be on the board.
-// Max life predicts the amount far more than food dropped.
+    // Max life predicts the amount far more than food dropped.
     private val MAX_LIFE = 200 // 200 is around the minimum for a stable population on 15*15
     private val FOOD_DROP_ON_DEATH = 9 // 9 may be minimum for a stable population on 15*15
     private var dnaPosition = 0
@@ -87,28 +93,28 @@ class Cell(// TODO: Convert dna to a tree data structure and change the logic of
             Direction.UP -> if (yPosition > 0 && board[yPosition - 1][xPosition] == null) {
                 board[yPosition - 1][xPosition] = this
                 board[yPosition][xPosition] = null
-                yPosition = yPosition - 1
+                yPosition -= 1
             }
             Direction.DOWN -> if (yPosition < gridSize - 1 && board[yPosition + 1][xPosition] == null) {
                 board[yPosition + 1][xPosition] = this
                 board[yPosition][xPosition] = null
-                yPosition = yPosition + 1
+                yPosition += 1
             }
             Direction.LEFT -> if (xPosition < 0 && board[yPosition][xPosition - 1] == null) {
                 board[yPosition][xPosition - 1] = this
                 board[yPosition][xPosition] = null
-                xPosition = xPosition - 1
+                xPosition -= 1
             }
             Direction.RIGHT -> if (xPosition < gridSize - 1 && board[yPosition][xPosition + 1] == null) {
                 board[yPosition][xPosition + 1] = this
                 board[yPosition][xPosition] = null
-                xPosition = xPosition + 1
+                xPosition += 1
             }
         }
     }
 
     private fun eat() {
-        foodStore = foodStore + foodBoard[yPosition][xPosition]
+        foodStore += foodBoard[yPosition][xPosition]
         foodBoard[yPosition][xPosition] = 0
     }
 
