@@ -10,17 +10,12 @@ class Cell(// TODO: Convert dna to a tree data structure and change the logic of
 // Reproduce might move to an empty bit of the board.
         private val dna: String, private val board: Array<Array<Any?>>, private val foodBoard: Array<IntArray>, private var xPosition: Int, private var yPosition: Int, private val gridSize: Int) {
     // TODO: Perhaps change this enum to encompass all actions the Cell can perfom?
-    private enum class Direction(val value: String) {
-        UP("U"), DOWN("D"), LEFT("L"), RIGHT("R"), NONE("N");
-
-        override fun toString(): String {
-            return value
-        }
-
-        companion object {
-            var COUNT = values().size
-        }
-
+    private enum class Direction(val value: Char) {
+        UP('U'),
+        DOWN('D'),
+        LEFT('L'),
+        RIGHT('R'),
+        NONE('N')
     }
 
     // These variables predict how many cells will be on the board.
@@ -32,7 +27,11 @@ class Cell(// TODO: Convert dna to a tree data structure and change the logic of
     private var foodStore = 10 // Start with some food
     private val deathDate: Int
 
-    constructor(board: Array<Array<Any?>>, foodBoard: Array<IntArray>, xPosition: Int, yPosition: Int, gridSize: Int) : this(randomDna, board, foodBoard, xPosition, yPosition, gridSize) {}
+    constructor(board: Array<Array<Any?>>,
+                foodBoard: Array<IntArray>,
+                xPosition: Int,
+                yPosition: Int,
+                gridSize: Int) : this(randomDna(), board, foodBoard, xPosition, yPosition, gridSize)
 
     private fun decodeDna() {
         val instruction = dna.toCharArray()[dnaPosition]
@@ -172,13 +171,16 @@ class Cell(// TODO: Convert dna to a tree data structure and change the logic of
     }
 
     companion object {
-        //Random rand = new Random();
-//rand.nextInt(Direction.COUNT);
-        // TODO: Initialise dna randomly if not provided with any
-        private val randomDna: String
-            private get() =//Random rand = new Random();
-//rand.nextInt(Direction.COUNT);
-                "URRLD"
+        private fun randomDna(): String {
+            val rand = Random()
+
+            val dnaArray: ArrayList<Char> = ArrayList()
+            repeat(5) {
+                // This is a bit WTF and quite inefficient
+                dnaArray.add(Direction.values()[rand.nextInt(Direction.values().size)].value)
+            }
+            return String(dnaArray.toCharArray())
+        }
     }
 
     init {
